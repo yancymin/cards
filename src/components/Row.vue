@@ -16,11 +16,12 @@ export default {
         margin-top: 80px;
         position: relative;
         .code {
-            margin-bottom: 28px;
+            // margin-bottom: 28px;
         }
         .style {
             display: inline-block;
-            margin-right: 68px;
+            margin-right: 40px;
+            margin-top: 32px;
             &:last-child {
                 margin-right: 0;
             }

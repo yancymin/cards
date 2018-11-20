@@ -9,6 +9,8 @@
   },
   "dependencies": {
     "register-service-worker": "^1.0.0",
+    "smooth-scroll": "^15.0.0",
+    "smoothscroll": "^0.4.0",
     "vue": "^2.5.17",
     "vue-content-loader": "^0.2.1",
     "vue-router": "^3.0.1",

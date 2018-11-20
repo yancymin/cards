@@ -1,10 +1,10 @@
 <template>
-    <header class="header">
+    <header class="header" id="header">
         <div class="left">
             <!-- Place this tag where you want the button to render. -->
             <a class="github-button" href="https://github.com/SlothWUX/cards" data-icon="octicon-star" data-show-count="true" aria-label="Star SlothWUX/cards on GitHub">Star</a>
         </div>
-        <div class="center"></div>
+        <div class="center"><a href="#body" style="width:20px;height:20px;display:inline-block;"></a></div>
         <div class="right"></div>
     </header>
 </template>
