@@ -5,11 +5,20 @@
 </template>
 
 <style lang="scss">
+body{
+  margin: 0;
+}
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: 'Quicksand', 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
+  width: 1180px;
+  margin: 0 auto;
+  padding: 0;
+}
+::selection {
+  background: hsla(48,87%,83%,.99);
+  color: #1b1b1b;
 }
 </style>
