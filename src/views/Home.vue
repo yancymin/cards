@@ -10,37 +10,22 @@
                 <Loading class="loading" v-show="load"></Loading>
             </transition>
                 <div class="code" v-html="l.codepen">{{l.codepen}}</div>
-            <div class="style">
-                <span class="label">box-shadow</span>
-                <p class="value">{{l.boxShadow}}</p>
-            </div>
-            <div class="style">
-                <span class="label">border</span>
-                <p class="value">{{l.border}}</p>
-            </div>
-            <div class="style">
-                <span class="label">padding</span>
-                <p class="value">{{l.padding}}</p>
-            </div>
-            <div class="style">
-                <span class="label">border-radius</span>
-                <p class="value">{{l.borderRadius}}</p>
-            </div>
         </Row>
         <Row>
             <transition name="fade">
                 <button class="load-btn" @click="handleClickLoad" v-if="isLoadBtn">More</button>
             </transition>
             <transition name="fade">
-                <Loading v-if="isMore"></Loading>
+                <Loading v-if="isMore" style="z-index: 999"></Loading>
             </transition>
         </Row>
-        <footer style="height: 400px"></footer>
+        <footer style="height: 400px; margin-top: 20px; background-color: #fafafa; color: #dddddd; font-size: 30px; display: flex; align-items: center; justify-content: center">footer</footer>
     </div>
 </template>
 
 <script>
 // @ is an alias to /src
+import SmoothScroll from 'smooth-scroll';
 import Header from '../components/Header';
 import Row from '../components/Row';
 import DataList from './Data';
@@ -81,8 +66,11 @@ export default {
         const iframes = document.querySelectorAll('iframe');
         const self = this;
 
+        // console.log(document.querySelectorAll('iframe'));
+
         iframes[0].onload = function() {
             self.load = false
+            console.log(this.querySelector('.embed-nav'));
         };
         console.log(this.$refs);
         let timer = null;
@@ -90,17 +78,20 @@ export default {
         window.addEventListener('scroll', function() {
 
             self.scrollFunc();
+            console.log(self.scrollDirection)
             if(self.scrollDirection){
                 self.isHeader = true;
             } else {
                 self.isHeader = false;
             }
 
-
             if(document.body.scrollTop || document.documentElement.scrollTop + window.innerHeight >= document.body.offsetHeight) {
-                self.isLoadBtn = (self.counts%2) === 0?true:false;
+                console.log(self.counts);
+                self.isLoadBtn = self.counts%2 === 0?true:false;
                 self.isMore = self.counts%2 === 0?false:true;
+
                 if(self.isMore){
+                    self.counts ++;
                     clearTimeout(timer);
                     timer = setTimeout(self.loadData, 2000);
                 }else{
@@ -136,18 +127,23 @@ export default {
                 if(DataList[this.thisIndex]){
                     this.DataList.push(DataList[this.thisIndex]);
                     this.thisIndex ++;
+                }else{
+                    return console.log('循环♻️')
                 }
             }
-            this.counts ++;
+            // this.counts ++;
         },
         scrollFunc() {
 
             let diffY = this.scrollActionY - window.pageYOffset;
+            console.log(diffY);
             if (diffY < 0) {
                 // Scroll down
                 if(document.body.scrollTop || document.documentElement.scrollTop > 120) {
+                    console.log(document.body.scrollTop || document.documentElement.scrollTop)
                     this.scrollDirection = false
                 }
+                this.scrollDirection = true
             } else if (diffY > 0) {
                 // Scroll up
                 this.scrollDirection = true
@@ -191,5 +187,8 @@ export default {
         /* .slide-fade-leave-active for below version 2.1.8 */ {
         transform: translateX(10px);
         opacity: 0;
+    }
+    .embed-nav{
+        display: none;
     }
 </style>
