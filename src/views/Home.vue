@@ -4,149 +4,137 @@
         <transition name="slide-fade">
             <Header v-if="isHeader"></Header>
         </transition>
-        <a @click="theme">切换主题</a>
+        <a>切换主题</a>
         <Row v-for="l, index in DataList" ref="load">
             <transition name="fade">
                 <Loading class="loading" v-show="load"></Loading>
             </transition>
-                <div class="code" v-html="l.codepen">{{l.codepen}}</div>
+            <div class="code" v-html="l.codepen">{{l.codepen}}</div>
         </Row>
-        <Row>
-            <transition name="fade">
-                <button class="load-btn" @click="handleClickLoad" v-if="isLoadBtn">More</button>
-            </transition>
-            <transition name="fade">
-                <Loading v-if="isMore" style="z-index: 999"></Loading>
-            </transition>
-        </Row>
-        <footer style="height: 400px; margin-top: 20px; background-color: #fafafa; color: #dddddd; font-size: 30px; display: flex; align-items: center; justify-content: center">footer</footer>
+        <div class="pagination">
+            <a class="pre" @click="prePage" v-show="page > 1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"/><path fill="none" d="M0 0h24v24H0V0z"/></svg>
+            </a>
+            <a class="next" @click="nextPage" v-show="page < pageSize">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"/><path fill="none" d="M0 0h24v24H0V0z"/></svg>
+            </a>
+        </div>
     </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import SmoothScroll from 'smooth-scroll';
+// import SmoothScroll from 'smooth-scroll';
 import Header from '../components/Header';
 import Row from '../components/Row';
 import DataList from './Data';
-import Loading from "../components/Loading";
+import Loading from '../components/Loading';
 
 export default {
     name: 'home',
-    data: function(){
+    data() {
         return {
             DataList: [],
+            page: 1,
+            pageSize: 0,
             load: true,
             isMore: false,
-            countNum: 4,
+            countNum: 7,
             thisIndex: -1,
             counts: 0,
             isLoadBtn: false,
             isHeader: true,
             scrollActionY: undefined,
-            scrollDirection: ''
-        }
+            scrollDirection: '',
+            timer: null
+        };
     },
     components: {
         Loading,
         Header,
         Row
     },
-    created: function() {
-
-        for(let i=0; i<this.countNum; i++) {
-            this.DataList.push(DataList[i])
+    created() {
+        console.log(DataList.length);
+        this.pageSize = Math.ceil(DataList.length/7);
+        for (let i = 0; i < this.countNum; i++) {
+            this.DataList.push(DataList[i]);
         }
 
         this.thisIndex = this.countNum;
     },
-    mounted: function () {
+    mounted() {
         this.counts = 1;
         this.scrollActionY = window.pageYOffset;
-        const iframes = document.querySelectorAll('iframe');
         const self = this;
 
-        // console.log(document.querySelectorAll('iframe'));
+        const iframes = document.querySelectorAll('iframe');
+        console.log(iframes[0]);
 
-        iframes[0].onload = function() {
-            self.load = false
-            console.log(this.querySelector('.embed-nav'));
+        iframes[0].onload = function () {
+            console.log('loaded');
+            self.load = false;
         };
-        console.log(this.$refs);
-        let timer = null;
 
-        window.addEventListener('scroll', function() {
-
+        window.addEventListener('scroll', () => {
             self.scrollFunc();
-            console.log(self.scrollDirection)
-            if(self.scrollDirection){
+
+            if (self.scrollDirection) {
                 self.isHeader = true;
             } else {
                 self.isHeader = false;
             }
+        });
+    },
+    methods: {
+        prePage() {
+            if(this.page > 1) {
+                this.page+= -1;
+                this.updateData();
+            }
+        },
+        nextPage() {
+            if(this.page < this.pageSize) {
+                this.page+= 1;
+                this.updateData();
+            }
 
-            if(document.body.scrollTop || document.documentElement.scrollTop + window.innerHeight >= document.body.offsetHeight) {
-                console.log(self.counts);
-                self.isLoadBtn = self.counts%2 === 0?true:false;
-                self.isMore = self.counts%2 === 0?false:true;
-
-                if(self.isMore){
-                    self.counts ++;
-                    clearTimeout(timer);
-                    timer = setTimeout(self.loadData, 2000);
+        },
+        updateData() {
+            this.load = true;
+            this.DataList.length = 0;
+            let n = this.countNum*(this.page-1);
+            console.log(n);
+            for (let i = 0; i < 7; i++) {
+                if(DataList[n+i]){
+                    this.DataList.push(DataList[n+i]);
                 }else{
                     return
                 }
             }
-        })
-
-    },
-    methods: {
-        handleClickLoad() {
-            this.isMore = true;
-            this.isLoadBtn = false;
-            let timer = null;
-            clearTimeout(timer);
-            timer = setTimeout(this.loadData, 2000);
+            console.log(this.DataList)
+            this.loading();
         },
-        theme(){
-            let iframes = document.querySelectorAll('iframe')
-            for(let f of iframes){
-                console.log(f)
-                f.src = "//codepen.io/yancy/embed/gBLLxz/?height=336&theme-id=dark&default-tab=result"
-            }
-        },
-        loadData() {
-            this.isMore = false;
+        loading(){
+            const self = this;
 
-            if(this.thisIndex >= DataList.length) {
-                return
-            }
-
-            for(let i=0; i < this.countNum; i++) {
-                if(DataList[this.thisIndex]){
-                    this.DataList.push(DataList[this.thisIndex]);
-                    this.thisIndex ++;
-                }else{
-                    return console.log('循环♻️')
-                }
-            }
-            // this.counts ++;
+            this.timer = window.setTimeout(function () {
+                console.log('...')
+                self.load = false;
+                clearTimeout(this.timer);
+            }, 3000)
         },
         scrollFunc() {
-
-            let diffY = this.scrollActionY - window.pageYOffset;
-            console.log(diffY);
+            const diffY = this.scrollActionY - window.pageYOffset;
             if (diffY < 0) {
-                // Scroll down
-                if(document.body.scrollTop || document.documentElement.scrollTop > 120) {
-                    console.log(document.body.scrollTop || document.documentElement.scrollTop)
-                    this.scrollDirection = false
+                if (document.body.scrollTop || document.documentElement.scrollTop > 200) {
+                    this.scrollDirection = false;
+                } else {
+                    this.scrollDirection = true;
                 }
-                this.scrollDirection = true
             } else if (diffY > 0) {
                 // Scroll up
-                this.scrollDirection = true
+                this.scrollDirection = true;
             }
             this.scrollActionY = window.pageYOffset;
         }
@@ -178,17 +166,51 @@ export default {
     /* 可以设置不同的进入和离开动画 */
     /* 设置持续时间和动画函数 */
     .slide-fade-enter-active {
-        transition: all .3s ease;
+        transition: all .3s ease-in;
     }
     .slide-fade-leave-active {
-        transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+        transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
     }
     .slide-fade-enter, .slide-fade-leave-to
         /* .slide-fade-leave-active for below version 2.1.8 */ {
-        transform: translateX(10px);
+        transform: translateY(-10px);
         opacity: 0;
     }
     .embed-nav{
         display: none;
+    }
+    .pagination {
+        position: fixed;
+        right: 6%;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+    .pre, .next{
+        width: 40px;
+        height: 40px;
+        border-radius: 40px;
+        background: #FFFFFF;
+        box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.08), 0px -1px 2px rgba(0, 0, 0, 0.08);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: all .3s;
+        cursor: pointer;
+        &:hover {
+            background-color: #000;
+            svg {
+                path{
+                    &:first-child {
+                        fill: #fff;
+                    }
+                }
+            }
+        }
+    }
+    .next {
+        margin-top:16px;
+        svg {
+            transform: rotate(-180deg);
+        }
     }
 </style>

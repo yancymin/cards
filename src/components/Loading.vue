@@ -18,14 +18,14 @@
 </template>
 
 <script>
-    import { ContentLoader } from 'vue-content-loader';
+import { ContentLoader } from 'vue-content-loader';
 
-    export default {
-        name: 'Loading',
-        components: {
-            ContentLoader
-        }
-    };
+export default {
+    name: 'Loading',
+    components: {
+        ContentLoader
+    }
+};
 </script>
 
 <style>

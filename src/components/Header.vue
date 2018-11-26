@@ -1,11 +1,12 @@
 <template>
-    <header class="header">
-        <div class="left">
-            <!-- Place this tag where you want the button to render. -->
-            <a class="github-button" href="https://github.com/SlothWUX/cards" data-icon="octicon-star" data-show-count="true" aria-label="Star SlothWUX/cards on GitHub">Star</a>
+    <header class="header" id="header">
+        <div class="container">
+            <div class="left">
+                <a class="github-button" href="https://github.com/SlothWUX/cards" data-icon="octicon-star" data-show-count="true" aria-label="Star SlothWUX/cards on GitHub">Star</a>
+            </div>
+            <div class="center"><a href="#body" style="width:20px;height:20px;display:inline-block;"></a></div>
+            <div class="right"></div>
         </div>
-        <div class="center"></div>
-        <div class="right"></div>
     </header>
 </template>
 
@@ -13,15 +14,21 @@
     .header {
         position: fixed;
         top: 0;
-        left: 50%;
-        margin-left: -590px;
-        width: 1180px;
+        left: 0;
+        width: 100%;
         height: 48px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
         background-color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         z-index: 1;
+        .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 1100px;
+            height: 100%;
+        }
         div {
             height: 100%;
         }
