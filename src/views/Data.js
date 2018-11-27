@@ -86,14 +86,6 @@ const list = [
     {
         codepen: `<iframe height='480' scrolling='no' title='Upload Files Animation' src='//codepen.io/yancy/embed/BPywpP/?height=300&theme-id=35202&default-tab=result' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='https://codepen.io/yancy/pen/BPywpP/'>Upload Files Animation</a> by Yancy Min (<a href='https://codepen.io/yancy'>@yancy</a>) on <a href='https://codepen.io'>CodePen</a>.
         </iframe>`
-    },
-    {
-        codepen: `<iframe height='480' scrolling='no' title='Upload Files Animation' src='//codepen.io/yancy/embed/BPywpP/?height=300&theme-id=35202&default-tab=result' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='https://codepen.io/yancy/pen/BPywpP/'>Upload Files Animation</a> by Yancy Min (<a href='https://codepen.io/yancy'>@yancy</a>) on <a href='https://codepen.io'>CodePen</a>.
-        </iframe>`
-    },
-    {
-        codepen: `<iframe height='480' scrolling='no' title='Upload Files Animation' src='//codepen.io/yancy/embed/BPywpP/?height=300&theme-id=35202&default-tab=result' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='https://codepen.io/yancy/pen/BPywpP/'>Upload Files Animation</a> by Yancy Min (<a href='https://codepen.io/yancy'>@yancy</a>) on <a href='https://codepen.io'>CodePen</a>.
-        </iframe>`
-    },
+    }
 ];
 export default list;

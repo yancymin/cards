@@ -9,7 +9,7 @@
             <transition name="fade">
                 <Loading class="loading" v-show="load"></Loading>
             </transition>
-            <div class="code" v-html="l.codepen">{{l.codepen}}</div>
+            <div class="code" v-html="l.codepen" @load="hehe">{{l.codepen}}</div>
         </Row>
         <div class="pagination">
             <a class="pre" @click="prePage" v-show="page > 1">
@@ -41,7 +41,6 @@ export default {
             isMore: false,
             countNum: 7,
             thisIndex: -1,
-            counts: 0,
             isLoadBtn: false,
             isHeader: true,
             scrollActionY: undefined,
@@ -64,21 +63,13 @@ export default {
         this.thisIndex = this.countNum;
     },
     mounted() {
-        this.counts = 1;
+        this.iframeLoad();
+
         this.scrollActionY = window.pageYOffset;
         const self = this;
 
-        const iframes = document.querySelectorAll('iframe');
-        console.log(iframes[0]);
-
-        iframes[0].onload = function () {
-            console.log('loaded');
-            self.load = false;
-        };
-
         window.addEventListener('scroll', () => {
             self.scrollFunc();
-
             if (self.scrollDirection) {
                 self.isHeader = true;
             } else {
@@ -87,6 +78,9 @@ export default {
         });
     },
     methods: {
+        hehe(){
+            console.log('hehe')
+        },
         prePage() {
             if(this.page > 1) {
                 this.page+= -1;
@@ -108,21 +102,23 @@ export default {
             for (let i = 0; i < 7; i++) {
                 if(DataList[n+i]){
                     this.DataList.push(DataList[n+i]);
-                }else{
-                    return
+                } else {
+                    break
                 }
             }
-            console.log(this.DataList)
-            this.loading();
-        },
-        loading(){
-            const self = this;
 
-            this.timer = window.setTimeout(function () {
-                console.log('...')
+            this.$nextTick(function () {
+                this.iframeLoad();
+            });
+        },
+        iframeLoad() {
+            const self = this;
+            const iframes = document.querySelectorAll('iframe');
+            console.log(iframes[0]);
+            iframes[0].onload = function () {
+                console.log('loaded');
                 self.load = false;
-                clearTimeout(this.timer);
-            }, 3000)
+            };
         },
         scrollFunc() {
             const diffY = this.scrollActionY - window.pageYOffset;
