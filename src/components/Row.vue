@@ -7,16 +7,61 @@
 <script>
 
 export default {
-  name: 'Row'
+    name: 'Row'
 };
 </script>
 
 <style lang="scss">
 .row {
-  margin-top: 80px;
+  width: 100%;
+  margin-top: 0px;
   position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  transition-delay: 0.1s;
+
+  &:hover {
+    &::before {
+      opacity: 0;
+        animation: unShow 0.1s ease 0.2s forwards;
+    }
+    &::after {
+      opacity: 0;
+        animation: unShow 0.1s ease 0.2s forwards;
+    }
+  }
+
+  &::before {
+    display: block;
+    position: absolute;
+    content: '';
+    width: 100%;
+    height: 53px;
+    background-color: #e8eaed;
+    transition: all 0.25s ease-out;
+    transition-delay: 0.1s;
+  }
+
+  &::after {
+    display: block;
+    position: absolute;
+    bottom: 0;
+    content: '';
+    width: 100%;
+    height: 34px;
+    background-color: #e8eaed;
+    transition: all 0.25s ease-out;
+    transition-delay: 0.1s;
+  }
+
+  @keyframes unShow {
+    to {
+      z-index: -10;
+    }
+  }
+
   .code {
-    // margin-bottom: 28px;
+    height: 480px;
   }
   .style {
     display: inline-block;

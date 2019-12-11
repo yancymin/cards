@@ -1,11 +1,10 @@
 <template>
     <div class="home">
-        <div style="height: 48px"></div>
         <transition name="slide-fade">
             <Header v-if="isHeader"></Header>
         </transition>
-        <a>切换主题</a>
-        <Row v-for="l, index in DataList" ref="load">
+        <!-- <a>切换主题</a> -->
+        <Row v-for="(l, index) in DataList" ref="load" :key="index">
             <transition name="fade">
                 <Loading class="loading" v-show="load"></Loading>
             </transition>
@@ -55,7 +54,7 @@ export default {
     },
     created() {
         console.log(DataList.length);
-        this.pageSize = Math.ceil(DataList.length/7);
+        this.pageSize = Math.ceil(DataList.length / 7);
         for (let i = 0; i < this.countNum; i++) {
             this.DataList.push(DataList[i]);
         }
@@ -78,32 +77,31 @@ export default {
         });
     },
     methods: {
-        hehe(){
-            console.log('hehe')
+        hehe() {
+            console.log('hehe');
         },
         prePage() {
-            if(this.page > 1) {
-                this.page+= -1;
+            if (this.page > 1) {
+                this.page += -1;
                 this.updateData();
             }
         },
         nextPage() {
-            if(this.page < this.pageSize) {
-                this.page+= 1;
+            if (this.page < this.pageSize) {
+                this.page += 1;
                 this.updateData();
             }
-
         },
         updateData() {
             this.load = true;
             this.DataList.length = 0;
-            let n = this.countNum*(this.page-1);
+            const n = this.countNum * (this.page - 1);
             console.log(n);
             for (let i = 0; i < 7; i++) {
-                if(DataList[n+i]){
-                    this.DataList.push(DataList[n+i]);
+                if (DataList[n + i]) {
+                    this.DataList.push(DataList[n + i]);
                 } else {
-                    break
+                    break;
                 }
             }
 
@@ -138,6 +136,9 @@ export default {
 };
 </script>
 <style lang="scss">
+.home {
+    padding: 120px 0;
+}
     .more {
         display: flex;
         align-items: center;

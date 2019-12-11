@@ -7,6 +7,7 @@
 <style lang="scss">
 body{
   margin: 0;
+  background-color: #E8EAED;
 }
 #app {
   font-family: 'Quicksand', 'Avenir', Helvetica, Arial, sans-serif;

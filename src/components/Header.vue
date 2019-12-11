@@ -2,7 +2,7 @@
     <header class="header" id="header">
         <div class="container">
             <div class="left">
-                <a class="github-button" href="https://github.com/SlothWUX/cards" data-icon="octicon-star" data-show-count="true" aria-label="Star SlothWUX/cards on GitHub">Star</a>
+                <!-- <a class="github-button" href="https://github.com/SlothWUX/cards" data-icon="octicon-star" data-show-count="true" aria-label="Star SlothWUX/cards on GitHub">Star</a> -->
             </div>
             <div class="center"><a href="#body" style="width:20px;height:20px;display:inline-block;"></a></div>
             <div class="right"></div>
@@ -41,9 +41,9 @@
             background: url("../assets/sloth.svg") center no-repeat;
             width: 22px;
         }
-        .right {
+        /* .right {
             background: url("../assets/buymeacoffee.svg") center no-repeat;
             width: 100px;
-        }
+        } */
     }
 </style>
