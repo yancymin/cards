@@ -1,5 +1,5 @@
 <template>
-  <div class="hero-card">
+  <div class="hero-card" :class="{cardDark: isCardDark}">
     <div class="top">
       <div class="title">
         <svg
@@ -80,7 +80,7 @@
           </svg>
         </a>
 
-        <div class="modeSwitch">
+        <div class="modeSwitch" @click="triggerClick()">
           <svg
             width="18"
             height="18"
@@ -102,6 +102,12 @@
 <script>
 export default {
     name: 'heroCard',
+    props: ['isCardDark'],
+    methods: {
+        triggerClick() {
+            this.$emit('modeSwitch');
+        }
+    },
     mounted() {
         const nav = document.querySelector('#nav');
 
@@ -112,13 +118,12 @@ export default {
                 nav.classList.remove('navFixed');
             }
         });
-
-
-        console.log(nav.offsetTop);
     },
     data() {
         return {
+            isCardDark: false,
             categoryData: [
+                'All',
                 'Input',
                 'Animation',
                 'Layout',
@@ -139,10 +144,9 @@ export default {
   top: 0;
   left: 20px !important;
   height: min-content;
-  width: calc(100vw - 75px) !important;
+  width: calc(100vw - 40px) !important;
   margin: 0 !important;
   border: 1px solid #e0e0e0;
-  padding: 16px !important;
   box-shadow: 0px 2px 10px rgba(209, 217, 231, 0.3);
 
   .category {
@@ -209,6 +213,8 @@ export default {
     .logo {
       position: absolute;
       right: 0;
+      transition: all 0.3s ease;
+      transform: rotateY(0) perspective(1000px);
     }
   }
 
@@ -243,19 +249,26 @@ export default {
         opacity: 0;
         width: 48px;
         height: 48px;
-        transform: scale(0.65) translateX(40px) ;
+        transform: scale(0.65) translateX(40px);
         transition: all 0.26s ease;
       }
 
       button {
         cursor: pointer;
-        padding: 8px;
+        padding: 6px 8px;
         background-color: $color-black-1;
         border-radius: 3px;
         margin-right: 16px;
-        border: none;
+        border: 1px solid transparent;
+        transition: all 0.2s ease-in-out;
         @include font(12, 400, 12, 1) {
           color: white !important;
+        }
+
+        &:hover {
+          background-color: #fff;
+          border: 1px solid $color-black-1;
+          color: $color-black-1 !important;
         }
       }
 
@@ -279,7 +292,52 @@ export default {
         background-color: $color-black-1;
         margin-right: 16px;
       }
+
+      .modeSwitch {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        width: 18px;
+        height: 18px;
+        cursor: pointer;
+        transition: all 0.25s ease;
+
+        /* &::after {
+          opacity: 0;
+          content: '';
+          display: block;
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          padding: 4px;
+          border-radius: 3px;
+          background: #aab9cf;
+          transition: all 0.2s ease;
+        }
+
+        &:hover {
+          &::after {
+            opacity: 0.2;
+          }
+        } */
+      }
     }
+  }
+}
+
+.cardDark {
+  .modeSwitch {
+    transform: rotate(-180deg) !important;
+  }
+
+  .bottom {
+    box-shadow: none;
+  }
+
+  .logo,
+  .nav-logo {
+    transform: rotateY(180deg) !important;
   }
 }
 </style>

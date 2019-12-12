@@ -1,5 +1,5 @@
 <template>
-  <div class="row">
+  <div class="row" :class="{rowDark: isRowDark}">
     <slot></slot>
   </div>
 </template>
@@ -7,7 +7,8 @@
 <script>
 
 export default {
-    name: 'Row'
+    name: 'Row',
+    props: ['isRowDark']
 };
 </script>
 
@@ -23,11 +24,11 @@ export default {
   &:hover {
     &::before {
       opacity: 0;
-        animation: unShow 0.1s ease 0.2s forwards;
+      animation: unShow 0.1s ease 0.2s forwards;
     }
     &::after {
       opacity: 0;
-        animation: unShow 0.1s ease 0.2s forwards;
+      animation: unShow 0.1s ease 0.2s forwards;
     }
   }
 
@@ -94,5 +95,13 @@ export default {
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
+}
+
+.rowDark {
+    &::before,
+    &::after {
+      background: #333 !important;
+      /* transition: background 0.3s ease !important; */
+    }
 }
 </style>

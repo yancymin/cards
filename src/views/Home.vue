@@ -1,9 +1,9 @@
 <template>
-  <div class="home">
-    <HeroCard />
+  <div class="home" :class="{dark: isDark}">
+    <HeroCard @modeSwitch="modeSwitch" :isCardDark="isDark" />
     <!-- <a>切换主题</a> -->
     <div class="container">
-      <Row v-for="(l, index) in DataList" ref="load" :key="index">
+      <Row v-for="(l, index) in DataList" ref="load" :key="index" :isRowDark="isDark">
         <transition name="fade">
           <Loading class="loading" v-show="load"></Loading>
         </transition>
@@ -40,6 +40,7 @@ export default {
     name: 'home',
     data() {
         return {
+            isDark: localStorage.getItem('dark'),
             DataList: [],
             page: 1,
             pageSize: 0,
@@ -85,6 +86,16 @@ export default {
         });
     },
     methods: {
+
+        modeSwitch() {
+            if (!localStorage.getItem('dark')) {
+                this.isDark = true;
+                localStorage.setItem('dark', 'true');
+            } else {
+                this.isDark = false;
+                localStorage.removeItem('dark');
+            }
+        },
         hehe() {
             console.log('hehe');
         },
@@ -149,11 +160,13 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+  transition: background 0.25s ease-out;
+  transition-delay: 0.1s;
 
   .container {
     width: 100%;
     max-width: 980px;
-    padding: 80px 0 120px 0;
+    padding: 120px 0 120px 0;
   }
 }
 .more {
@@ -215,5 +228,9 @@ export default {
   svg {
     transform: rotate(-180deg);
   }
+}
+
+.dark {
+  background: #333;
 }
 </style>
