@@ -1,0 +1,11 @@
+$color-black-1: #131417;
+$color-black-2: hsla(225, 10%, 8%, 0.7);
+
+@mixin font($size, $weight, $lineHeight, $color) {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  color: if($color == 0, $color-black-1, $color-black-2);
+  font-weight: $weight;
+  font-size: #{$size}px;
+  line-height: #{$lineHeight}px;
+}
