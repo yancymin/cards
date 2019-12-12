@@ -62,7 +62,7 @@ export default {
   }
 
   .code {
-    height: 560px;
+    height: 600px;
   }
   .style {
     display: inline-block;

@@ -165,7 +165,7 @@ export default {
 
   .container {
     width: 100%;
-    max-width: 980px;
+    max-width: 1200px;
     padding: 120px 0 120px 0;
   }
 }
