@@ -195,7 +195,7 @@ export default {
 }
 .pagination {
   position: fixed;
-  right: 6%;
+  right: 20px;
   top: 50%;
   transform: translateY(-50%);
 }
